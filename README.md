@@ -24,6 +24,13 @@ components: {
 ...
 ```
 
+# Props
+
+| Prop     |  Type  |                   Possible Values |
+| -------- | :----: | --------------------------------: |
+| key-code | Number | [see here](https://keycode.info/) |
+| event    | String |    _keydown_, _keypress_, _keyup_ |
+
 # Example Usage
 
 HTML:
