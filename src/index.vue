@@ -7,7 +7,7 @@ export default {
   props: {
     keyCode: {
       type: Number,
-      default: 13 // ENTER Key
+      default: null
     },
     event: {
       type: String,
@@ -22,8 +22,8 @@ export default {
   },
   methods: {
     emitEvent() {
-      if (event.keyCode === this.keyCode) {
-        this.$emit("pressed");
+      if (event.keyCode === this.keyCode || !this.keyCode) {
+        this.$emit("pressed", event.keyCode);
       }
     }
   }

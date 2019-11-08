@@ -1,10 +1,10 @@
 # Vue Keypress
 
-Want to capture _keyup_ and _keydown_ events globally in Vue? Nothing easier than that.
+Want to capture _keydown_, _keypress_ and _keyup_ and events globally in Vue? Nothing easier than that.
 
-The Vue Keypress Component let's you easily implement this functionality in your Vue.js application.
+The Vue Keypress Component let's you do just that.
 
-Just add the component to the view/component where you need the functionality. When the component gets destroyed, the global event handler also gets removed.
+Just add the component to the view/component that should start a global keypress handler and add . When the component gets destroyed, the global event handler also gets removed.
 
 # How to install?
 
@@ -26,10 +26,16 @@ components: {
 
 # Props
 
-| Prop     |  Type  |                   Possible Values |
-| -------- | :----: | --------------------------------: |
-| key-code | Number | [see here](https://keycode.info/) |
-| event    | String |    _keydown_, _keypress_, _keyup_ |
+| Prop    | Type   | Default | Possible Values                   | Description c                                                             |
+| ------- | ------ | ------- | --------------------------------- | ------------------------------------------------------------------------- |
+| keyCode | Number | null    | [see here](https://keycode.info/) | Key that should trigger the event. If _null_, any key will trigger event. |
+| event   | String | 'keyup' | _keydown_, _keypress_, _keyup_    |
+
+# Events
+
+| Event    | Attributes | Description                                          |
+| -------- | ---------- | ---------------------------------------------------- |
+| @pressed | (key-code) | Get's emitted when the defined key has been pressed. |
 
 # Example Usage
 
