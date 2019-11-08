@@ -15,7 +15,6 @@ export default {
     }
   },
   mounted() {
-    console.log("HOER");
     window.addEventListener(this.event, this.emitEvent);
   },
   destroyed() {
