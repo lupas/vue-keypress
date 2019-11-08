@@ -1,0 +1,34 @@
+{
+  "name": "vue-keypress",
+  "version": "1.0.0",
+  "description": "Global keypress event handler component for Vue.js applications.",
+  "author": "Pascal Luther",
+  "license": "MIT",
+  "homepage": "https://github.com/lupas",
+  "repository": "https://github.com/lupas/vue-keypress",
+  "keywords": [
+    "vue, keypres, keydown, keyup"
+  ],
+  "publishConfig": {
+    "access": "public"
+  },
+  "files": [
+    "dist"
+  ],
+  "main": "dist/Keypress.umd.js",
+  "unpkg": "dist/Keypress.umd.min.js",
+  "scripts": {
+    "serve": "vue-cli-service serve src/index.vue",
+    "build": "vue-cli-service build",
+    "build:npm": "vue-cli-service build --target lib --name Keypress src/index.vue",
+    "publish:npm": "npm run build:npm && npm publish"
+  },
+  "peerDependencies": {},
+  "devDependencies": {
+    "vue-template-compiler": "^2.6.10"
+  },
+  "dependencies": {
+    "@vue/cli": "^4.0.5",
+    "@vue/cli-service": "^4.0.5"
+  }
+}
