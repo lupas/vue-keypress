@@ -1,7 +1,3 @@
-<template>
-  <div></div>
-</template>
-
 <script>
 export default {
   props: {
@@ -26,6 +22,7 @@ export default {
         this.$emit("pressed", event.keyCode);
       }
     }
-  }
+  },
+  render: () => null
 };
 </script>
