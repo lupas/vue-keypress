@@ -10,8 +10,7 @@ export default {
       default: "keyup"
     },
     preventDefault: {
-      type: Bolean,
-      default: null
+      type: Boolean
     }
   },
   mounted() {
