@@ -8,6 +8,10 @@ export default {
     event: {
       type: String,
       default: "keyup"
+    },
+    preventDefault: {
+      type: Bolean,
+      default: null
     }
   },
   mounted() {
@@ -17,7 +21,11 @@ export default {
     window.removeEventListener(this.event, this.emitEvent);
   },
   methods: {
-    emitEvent() {
+    emitEvent(e) {
+      if (this.preventDefault) {
+          e.preventDefault();
+      }
+      
       if (event.keyCode === this.keyCode || !this.keyCode) {
         this.$emit("pressed", event.keyCode);
       }
