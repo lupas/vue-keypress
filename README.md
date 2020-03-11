@@ -30,6 +30,7 @@ components: {
 | ------- | ------ | ------- | --------------------------------- | ------------------------------------------------------------------------- |
 | keyCode | Number | null    | [see here](https://keycode.info/) | Key that should trigger the event. If _null_, any key will trigger event. |
 | event   | String | 'keyup' | _keydown_, _keypress_, _keyup_    |
+| preventDefault   | Boolean | false | _true_,_false_    | Prevent the default action of the event |
 
 # Events
 
