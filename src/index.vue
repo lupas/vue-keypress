@@ -21,11 +21,10 @@ export default {
   },
   methods: {
     emitEvent(e) {
-      if (this.preventDefault) {
-          e.preventDefault();
-      }
-      
       if (event.keyCode === this.keyCode || !this.keyCode) {
+        if( this.preventDefault ){
+            e.preventDefault();
+        }
         this.$emit("pressed", event.keyCode);
       }
     }
