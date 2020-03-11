@@ -2,9 +2,10 @@
   "scripts": {
     "build:npm": "vue-cli-service build --target lib --dest ../dist --name Keypress ../src/index.vue"
   },
-  "devDependencies": {
-    "vue-template-compiler": "^2.6.10",
-    "@vue/cli": "^4.0.5",
-    "@vue/cli-service": "^4.0.5"
+  "devDependencies": {},
+  "dependencies": {
+    "@vue/cli": "^4.2.3",
+    "@vue/cli-service": "^4.2.3",
+    "vue-template-compiler": "^2.6.11"
   }
 }
