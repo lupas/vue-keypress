@@ -1,6 +1,6 @@
 {
   "name": "vue-keypress",
-  "version": "1.3.0",
+  "version": "1.4.0",
   "description": "Global keypress event handler component for Vue.js applications.",
   "author": "Pascal Luther",
   "license": "MIT",
@@ -14,7 +14,8 @@
   },
   "scripts": {
     "build": "cd build && npm run build:npm",
-    "publishToNpm": "npm run build && npm publish"
+    "publishToNpm": "npm run build && npm publish",
+    "demo": "cd demo && yarn dev"
   },
   "files": [
     "dist"

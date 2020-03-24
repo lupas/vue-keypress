@@ -5,9 +5,9 @@ export default {
       type: Number,
       default: null
     },
-    modifier: {
-      type: String, // shiftKey, ctrlKey, altKey, metaKey
-      default: null
+    modifiers: {
+      type: Array, // ['shiftKey', 'ctrlKey', 'altKey', 'metaKey']
+      default: () => []
     },
     event: {
       type: String,
@@ -29,8 +29,12 @@ export default {
         if (this.preventDefault){
             e.preventDefault();
         }
-        // Check if modifier was clicked
-        if (this.modifier && !event[this.modifier]) return
+        // Check if all modifiers were clicked and return, if not
+        if (this.modifiers.length) {
+          for (const modifier of this.modifiers) {
+            if (!event[modifier]) return
+          }
+        }
         // Success:
         this.$emit("pressed", event.keyCode);
       }

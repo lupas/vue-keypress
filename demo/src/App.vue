@@ -1,6 +1,6 @@
 <template>
   <div class="container">
-    <Keypress event="keyup" @pressed="someMethod" />
+    <Keypress event="keyup" @pressed="someMethod" :modifiers="['shiftKey', 'altKey', 'metaKey']" />
     <div class="card" :style="dynamicBackgroundStyle">
       <p class="keyCode">{{pressedKeyCode}}</p>
     </div>
