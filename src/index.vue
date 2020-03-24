@@ -5,6 +5,10 @@ export default {
       type: Number,
       default: null
     },
+    modifier: {
+      type: String, // shiftKey, ctrlKey, altKey, metaKey
+      default: null
+    },
     event: {
       type: String,
       default: "keyup"
@@ -22,9 +26,12 @@ export default {
   methods: {
     emitEvent(e) {
       if (event.keyCode === this.keyCode || !this.keyCode) {
-        if( this.preventDefault ){
+        if (this.preventDefault){
             e.preventDefault();
         }
+        // Check if modifier was clicked
+        if (this.modifier && !event[this.modifier]) return
+        // Success:
         this.$emit("pressed", event.keyCode);
       }
     }

@@ -40,7 +40,8 @@ components: {
 | Prop    | Type   | Default | Possible Values                   | Description c                                                             |
 | ------- | ------ | ------- | --------------------------------- | ------------------------------------------------------------------------- |
 | keyCode | Number | null    | [see here](https://keycode.info/) | Key that should trigger the event. If _null_, any key will trigger event. |
-| event   | String | 'keyup' | _keydown_, _keypress_, _keyup_    |
+| event   | String | 'keyup' | _keydown_, _keypress_, _keyup_    | |
+| modifier   | String | null | _ctrlKey_, _shiftKey_, _altKey_, _metaKey_    | Key that needs to be clicked befre the actual set keyCode.  |
 | preventDefault   | Boolean | false | _true_,_false_    | Prevent the default action of the event |
 
 # Events

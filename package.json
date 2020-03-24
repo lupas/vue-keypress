@@ -13,7 +13,8 @@
     "access": "public"
   },
   "scripts": {
-    "publishToNpm": "cd build && npm run build:npm && cd .. && npm publish"
+    "build": "cd build && npm run build:npm",
+    "publishToNpm": "npm run build && npm publish"
   },
   "files": [
     "dist"
