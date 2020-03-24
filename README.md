@@ -18,6 +18,8 @@ Just add the component to the view/component that should start a global keypress
 # How to install?
 
 ```js
+yarn add vue-keypress
+// or
 npm i vue-keypress
 ```
 
