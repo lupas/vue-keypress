@@ -13,7 +13,7 @@ Want to capture _keydown_, _keypress_ and _keyup_ and events globally in Vue? No
 
 The Vue Keypress Component let's you do just that.
 
-Just add the component to the view/component that should start a global keypress handler and add . When the component gets destroyed, the global event handler also gets removed.
+Just add the component to the view/component that should start a global keypress handler. When the component gets destroyed, the global event handler also gets removed.
 
 # How to install?
 
