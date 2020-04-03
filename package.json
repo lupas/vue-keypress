@@ -18,7 +18,8 @@
     "demo": "cd demo && yarn dev"
   },
   "files": [
-    "dist"
+    "dist",
+    "src"
   ],
   "module": "src/index.vue",
   "main": "dist/Keypress.umd.js",
