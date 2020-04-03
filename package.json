@@ -20,6 +20,7 @@
   "files": [
     "dist"
   ],
+  "module": "src/index.vue",
   "main": "dist/Keypress.umd.js",
   "unpkg": "dist/Keypress.umd.min.js"
 }

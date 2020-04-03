@@ -1,42 +1,52 @@
 <script>
 export default {
   props: {
-    keyCode: {
-      type: Number,
-      default: null
-    },
-    modifiers: {
-      type: Array, // ['shiftKey', 'ctrlKey', 'altKey', 'metaKey']
-      default: () => []
-    },
-    event: {
-      type: String,
-      default: "keyup"
-    },
-    preventDefault: {
-      type: Boolean
-    }
+    config: {
+      type: Array,
+      default: [{
+        keyCodes: null,
+        events: ['keyup'],
+        modifiers: null
+      }]
+    }    
   },
   mounted() {
-    window.addEventListener(this.event, this.emitEvent);
+    this._keyListeners = []
+    this.config.forEach(config => {
+      config.events.forEach(event => {
+        let listener = this.emitEvent(config.keyCodes, config.modifiers)
+        this._keyListeners.push({event, listener})
+        window.addEventListener(event, listener);  
+      });    
+    })    
   },
   destroyed() {
-    window.removeEventListener(this.event, this.emitEvent);
+    this._keyListeners.forEach(({event, listener}) => {
+      window.removeEventListener(event, listener);
+    })
   },
   methods: {
-    emitEvent(e) {
-      if (event.keyCode === this.keyCode || !this.keyCode) {
-        if (this.preventDefault){
-            e.preventDefault();
-        }
-        // Check if all modifiers were clicked and return, if not
-        if (this.modifiers.length) {
-          for (const modifier of this.modifiers) {
-            if (!event[modifier]) return
+    emitEvent(keyCodes, modifiers) {
+      return (e) => {
+        const index = keyCodes.indexOf(event.keyCode)
+        if (index != -1 || !keyCodes) {
+          if (this.preventDefault){
+              e.preventDefault();
           }
+          
+          if (modifiers && modifiers.length && Array.isArray(modifiers[0])) {
+              modifiers = modifiers[index]
+          }
+          
+          // Check if all modifiers were clicked and return, if not
+          if (modifiers.length) {          
+            if (!modifiers.every(modifier => event[modifier])) {
+              return
+            }            
+          }
+          // Success:
+          this.$emit("pressed", event.keyCode, event.type, modifiers);        
         }
-        // Success:
-        this.$emit("pressed", event.keyCode);
       }
     }
   },
