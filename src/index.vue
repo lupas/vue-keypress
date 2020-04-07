@@ -35,7 +35,7 @@ export default {
         if (index != -1 || !keyCodes) {
           let preventDefault = preventDefaults
           if (Array.isArray(preventDefaults)) {
-            preventDefault = preventDefault[index]
+            preventDefault = preventDefaults[index]
           }
           if (preventDefault){
               e.preventDefault();
