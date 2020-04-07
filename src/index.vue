@@ -1,4 +1,7 @@
 <script>
+
+const supportedModifiers = ['altKey', 'metaKey', 'ctrlKey', 'shiftKey']
+
 export default {
   props: {
     config: {
@@ -11,10 +14,10 @@ export default {
     }    
   },
   mounted() {
-    this._keyListeners = []
+    this._keyListeners = []    
     this.config.forEach(config => {
       config.events.forEach(event => {
-        let listener = this.emitEvent(config.keyCodes, config.modifiers)
+        let listener = this.emitEvent(config.keyCodes, config.modifiers, config.preventDefault)
         this._keyListeners.push({event, listener})
         window.addEventListener(event, listener);  
       });    
@@ -26,26 +29,29 @@ export default {
     })
   },
   methods: {
-    emitEvent(keyCodes, modifiers) {
+    emitEvent(keyCodes, modifiers, preventDefaults) {
       return (e) => {
         const index = keyCodes.indexOf(event.keyCode)
         if (index != -1 || !keyCodes) {
-          if (this.preventDefault){
+          let preventDefault = preventDefaults
+          if (Array.isArray(preventDefaults)) {
+            preventDefault = preventDefault[index]
+          }
+          if (preventDefault){
               e.preventDefault();
-          }
-          
+          }          
+          let mods = modifiers
           if (modifiers && modifiers.length && Array.isArray(modifiers[0])) {
-              modifiers = modifiers[index]
-          }
-          
-          // Check if all modifiers were clicked and return, if not
-          if (modifiers.length) {          
-            if (!modifiers.every(modifier => event[modifier])) {
+              mods = modifiers[index]
+          }          
+          // Check if only the specified modifiers were pressed
+          if (mods.length) {          
+            if (!supportedModifiers.every(modifier => event[modifier] == (mods.indexOf(modifier) != -1))) {
               return
             }            
           }
           // Success:
-          this.$emit("pressed", event.keyCode, event.type, modifiers);        
+          this.$emit("pressed", event.keyCode, event.type, mods);        
         }
       }
     }
