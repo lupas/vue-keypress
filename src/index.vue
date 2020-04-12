@@ -4,27 +4,45 @@ const supportedModifiers = ['altKey', 'metaKey', 'ctrlKey', 'shiftKey']
 
 export default {
   props: {
+    keyCode: {
+      type: Number,
+      default: null
+    },
+    modifiers: {
+      type: Array, // ['shiftKey', 'ctrlKey', 'altKey', 'metaKey']
+      default: () => []
+    },
+    event: {
+      type: String,
+      default: "keyup"
+    },
+    preventDefault: {
+      type: Boolean
+    },
     config: {
       type: Array,
-      default: [{
-        keyCodes: null,
-        events: ['keyup'],
-        modifiers: null
-      }]
+      default: null
     }    
   },
   mounted() {
-    this._keyListeners = []    
-    this.config.forEach(config => {
-      config.events.forEach(event => {
-        let listener = this.emitEvent(config.keyCodes, config.modifiers, config.preventDefault)
-        this._keyListeners.push({event, listener})
-        window.addEventListener(event, listener);  
-      });    
-    })    
+    this.m_keyListeners = []    
+    if (this.config) {
+      // use multi-key config exclusively
+      this.config.forEach(config => {
+        config.events.forEach(event => {
+          let listener = this.emitEvent(config.keyCodes, config.modifiers, config.preventDefault)
+          this.m_keyListeners.push({event, listener})
+          window.addEventListener(event, listener);  
+        });    
+      })    
+    } else {
+      let listener = this.emitEvent(this.keyCode, this.modifiers, this.preventDefault)
+      this.m_keyListeners.push({event: this.event, listener})
+      window.addEventListener(this.event, listener);  
+    }
   },
   destroyed() {
-    this._keyListeners.forEach(({event, listener}) => {
+    this.m_keyListeners.forEach(({event, listener}) => {
       window.removeEventListener(event, listener);
     })
   },
