@@ -7274,6 +7274,11 @@ vue-hot-reload-api@^2.3.0:
   resolved "https://registry.yarnpkg.com/vue-hot-reload-api/-/vue-hot-reload-api-2.3.4.tgz#532955cc1eb208a3d990b3a9f9a70574657e08f2"
   integrity sha512-BXq3jwIagosjgNVae6tkHzzIk6a8MHFtzAdwhnV5VlvPTFxDCvIttgSiHWjdGoTJvXtmRu5HacExfdarRcFhog==
 
+vue-keypress@^1.4.0:
+  version "1.4.0"
+  resolved "https://registry.yarnpkg.com/vue-keypress/-/vue-keypress-1.4.0.tgz#9b3024c5ef94092ea5f46bbf12d27f4ca6c339da"
+  integrity sha512-HB6coCS9EJroZP3yfvulKs52B9TJmKQqrypPLC05wU+s9NJEEyv95u0KsIxyqRfH4OyEO60dIXE/BB3One9ePQ==
+
 vue-loader@^15.8.3:
   version "15.9.1"
   resolved "https://registry.yarnpkg.com/vue-loader/-/vue-loader-15.9.1.tgz#bd2ab8f3d281e51d7b81d15390a58424d142243e"
