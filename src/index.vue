@@ -36,7 +36,7 @@ export default {
         });    
       })    
     } else {
-      let listener = this.emitEvent(this.keyCode, this.modifiers, this.preventDefault)
+      let listener = this.emitEvent([this.keyCode], this.modifiers, this.preventDefault)
       this.m_keyListeners.push({event: this.event, listener})
       window.addEventListener(this.event, listener);  
     }
