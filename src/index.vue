@@ -49,8 +49,8 @@ export default {
   methods: {
     emitEvent(keyCodes, modifiers, preventDefaults) {
       return (e) => {
-        const index = keyCodes.indexOf(event.keyCode)
-        if (index != -1 || !keyCodes) {
+        let index = keyCodes.indexOf(event.keyCode)
+        while (index != -1 || !keyCodes) {
           let preventDefault = preventDefaults
           if (Array.isArray(preventDefaults)) {
             preventDefault = preventDefaults[index]
@@ -65,11 +65,14 @@ export default {
           // Check if only the specified modifiers were pressed
           if (mods.length) {          
             if (!supportedModifiers.every(modifier => event[modifier] == (mods.indexOf(modifier) != -1))) {
-              return
+              // try another code configuration
+              index = keyCodes.indexOf(event.keyCode, index + 1)
+              continue
             }            
           }
           // Success:
           this.$emit("pressed", event.keyCode, event.type, mods);        
+          break
         }
       }
     }
