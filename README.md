@@ -51,7 +51,7 @@ components: {
 
 | Event    | Description                                          |
 | -------- |  ---------------------------------------------------- |
-| @pressed | Get's emitted when the defined key/modifiers were pressed. |
+| @success | Get's emitted when the defined key/modifiers were pressed. |
 | @wrong | Get's emitted when the wrong key(s) or modifier(s) was/were pressed. |
 | @any | Get's emitted with any keypress in any case. |
 
