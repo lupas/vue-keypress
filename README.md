@@ -22,7 +22,7 @@ Just add the component to the view/component that should start a global keypress
 
 # How to install?
 
-```js
+```bsh
 yarn add vue-keypress
 // or
 npm i vue-keypress
@@ -53,7 +53,7 @@ export default {
     Keypress: () => import('vue-keypress')
   },
   methods: {
-    someMethod() {
+    someMethod(response) {
       // Do something
     }
   }
@@ -122,7 +122,7 @@ export default {
       ],
   }),
   methods: {
-    someMethod() {
+    someMethod(response) {
       // Do something
     }
   }
