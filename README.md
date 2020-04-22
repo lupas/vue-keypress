@@ -7,6 +7,11 @@
  </p>
 </p>
 
+# ‼️ BREAKING CHANGES: V1 to V2 Migration
+
+* Event `@pressed` is now called `@success`
+* Prop `event` is now called `keyEvent`
+
 # Vue Keypress
 
 Want to capture _keydown_, _keypress_ and _keyup_ and events globally in Vue? Nothing easier than that.
