@@ -18,7 +18,7 @@ Just add the component to the view/component that should start a global keypress
 # ‼️ BREAKING CHANGES: v1.x to v2 Migration
 
 * Event `@pressed` is now called `@success`
-* Prop `event` is now called `keyEvent`¨
+* Prop `event` is now called `keyEvent`
 * The `@pressed` event (or now `@success` event) returns now an object with all the info and more
 
 # How to install?
