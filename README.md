@@ -37,13 +37,15 @@ components: {
 
 # Props
 
-| Prop    | Type   | Default | Possible Values                   | Description c                                                             |
+| Prop    | Type   | Default | Possible Values                   | Description |
 | ------- | ------ | ------- | --------------------------------- | ------------------------------------------------------------------------- |
 | keyEvent   | String | 'keyup' | _keydown_, _keypress_, _keyup_    | |
 | keyCode | Number | null    | [see here](https://keycode.info/) | Key that should trigger the event. If _null_, any key will trigger event. |
 | modifiers   | Array | [] | ['_ctrlKey_', '_shiftKey_', '_altKey_', '_metaKey_']    | Keys that needs to be pressed down before the actual key (key Code), e.g. Ctrl+A.  |
 | preventDefault   | Boolean | false | _true_,_false_    | Prevent the default action of the event |
 | multipleKeys   | Array | [] | See example in 'Multiple Keys'   | Allows you to define multiple keyCode/modifier combinations per keyEvent. |
+
+> If you use `multipleKeys`, all the other props (except `keyEvent`) become redundant.
 
 # Events
 
