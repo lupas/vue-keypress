@@ -43,7 +43,6 @@ export default {
     /** ****************************** */
     setupListeners() {
       const expectedEvent = {
-        id: 0, // Not needed
         keyEvent: this.keyEvent,
 
         // If single:

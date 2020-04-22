@@ -3,8 +3,8 @@
     <Keypress
       v-for="keypressEvent in keypressEvents"
       :key="keypressEvent.id"
-      :key-event="keypressEvent.event"
-      :multiple-keys="keypressEvent.multiple"
+      :key-event="keypressEvent.keyEvent"
+      :multiple-keys="keypressEvent.multipleKeys"
       @success="handleSuccess"
       @wrong="handleWrong"
     />
@@ -26,8 +26,8 @@ export default {
       pressedKeyCode: null,
       keypressEvents: [
         {
-          event: 'keydown',
-          multiple: [
+          keyEvent: 'keydown',
+          multipleKeys: [
             {
               keyCode: 65, // A
               modifiers: ['shiftKey'],
@@ -41,8 +41,8 @@ export default {
           ],
         },
         {
-          event: 'keyup',
-          multiple: [
+          keyEvent: 'keyup',
+          multipleKeys: [
             {
               keyCode: 65, // A
               modifiers: ['shiftKey'],
@@ -57,15 +57,6 @@ export default {
         },
       ],
     }
-  },
-  computed: {
-    dynamicBackgroundStyle() {
-      if (!this.pressedKeyCode) {
-        return { backgroundImage: "url('/keypressLogo.png')" }
-      } else {
-        return { backgroundImage: "url('/emptyKey.png')" }
-      }
-    },
   },
   methods: {
     handleSuccess(response) {
