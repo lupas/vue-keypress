@@ -7,11 +7,6 @@
  </p>
 </p>
 
-# ‼️ BREAKING CHANGES: v1.x to v2 Migration
-
-* Event `@pressed` is now called `@success`
-* Prop `event` is now called `keyEvent`
-
 # Vue Keypress
 
 Want to capture _keydown_, _keypress_ and _keyup_ and events globally in Vue? Nothing easier than that.
@@ -19,6 +14,11 @@ Want to capture _keydown_, _keypress_ and _keyup_ and events globally in Vue? No
 The Vue Keypress Component let's you do just that.
 
 Just add the component to the view/component that should start a global keypress handler. When the component gets destroyed, the global event handler also gets removed.
+
+# ‼️ BREAKING CHANGES: v1.x to v2 Migration
+
+* Event `@pressed` is now called `@success`
+* Prop `event` is now called `keyEvent`
 
 # How to install?
 
