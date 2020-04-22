@@ -1,35 +1,45 @@
 <template>
   <div class="container">
-    <Keypress event="keyup" @pressed="someMethod" :modifiers="['shiftKey']" />
-    <div class="card" :style="dynamicBackgroundStyle">
-      <p class="keyCode">{{pressedKeyCode}}</p>
+    <div>
+      <SingleEventSingleKeycode v-if="index === 0" />
+      <SingleEventMultipleKeycodes v-if="index === 1" />
+      <MultipleEventsMultipleKeycodes v-if="index === 2" />
+      <button @click="switchIndex">Switch Mode</button>
     </div>
   </div>
 </template>
 
 <script>
+import MultipleEventsMultipleKeycodes from './components/MultipleEventsMultipleKeycodes.vue'
+import SingleEventMultipleKeycodes from './components/SingleEventMultipleKeycodes.vue'
+import SingleEventSingleKeycode from './components/SingleEventSingleKeycode.vue'
+
 export default {
   components: {
-    Keypress: () => import('vue-keypress')
+    MultipleEventsMultipleKeycodes,
+    SingleEventMultipleKeycodes,
+    SingleEventSingleKeycode,
   },
-  data: () => ({
-    pressedKeyCode: null
-  }),
-  computed: {
-    dynamicBackgroundStyle() {
-      if (!this.pressedKeyCode) {
-        return { 'backgroundImage': "url('/keypressLogo.png')" }
-      } else {
-        return { 'backgroundImage': "url('/emptyKey.png')" }
-      }
-      
+  data() {
+    return {
+      inSingleMode: true,
+      index: 0,
+      modes: [
+        'SingleEventSingleKeycode',
+        'SingleEventMultipleKeycodes',
+        'MultipleEventsMultipleKeycodes',
+      ],
     }
   },
   methods: {
-    someMethod(val) {
-      this.pressedKeyCode = val
-    }
-  }
+    switchIndex() {
+      if (this.index === 2) {
+        this.index = 0
+      } else {
+        this.index = this.index += 1
+      }
+    },
+  },
 }
 </script>
 
@@ -38,27 +48,10 @@ body {
   margin: 0;
 }
 
-.card {
-  background-size: contain;
-  background-repeat: no-repeat;
-  height: 40vh;
-  width: 40vh;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
 .container {
   display: flex;
   height: 100vh;
   align-items: center;
   justify-content: center;
-}
-
-.keyCode {
-  font-size: 70px;
-  font-weight: 600;
-  margin-bottom: 40%;
-  margin-right: 3%;
 }
 </style>

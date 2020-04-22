@@ -1,82 +1,125 @@
 <script>
-
 const supportedModifiers = ['altKey', 'metaKey', 'ctrlKey', 'shiftKey']
 
 export default {
   props: {
+    keyEvent: {
+      type: String,
+      default: 'keyup',
+    },
+
+    // Only for single key code:
     keyCode: {
       type: Number,
-      default: null
+      default: null,
     },
     modifiers: {
       type: Array, // ['shiftKey', 'ctrlKey', 'altKey', 'metaKey']
-      default: () => []
-    },
-    event: {
-      type: String,
-      default: "keyup"
+      default: () => [],
     },
     preventDefault: {
-      type: Boolean
+      type: Boolean,
     },
-    config: {
+
+    // Only for multiple key codes:
+    multipleKeys: {
       type: Array,
-      default: null
-    }    
+      default: () => [],
+    },
   },
+  data: () => ({
+    keyListeners: [],
+  }),
   mounted() {
-    this.m_keyListeners = []    
-    if (this.config) {
-      // use multi-key config exclusively
-      this.config.forEach(config => {
-        config.events.forEach(event => {
-          let listener = this.emitEvent(config.keyCodes, config.modifiers, config.preventDefault)
-          this.m_keyListeners.push({event, listener})
-          window.addEventListener(event, listener);  
-        });    
-      })    
-    } else {
-      let listener = this.emitEvent([this.keyCode], this.modifiers, this.preventDefault)
-      this.m_keyListeners.push({event: this.event, listener})
-      window.addEventListener(this.event, listener);  
-    }
+    this.setupListeners()
   },
   destroyed() {
-    this.m_keyListeners.forEach(({event, listener}) => {
-      window.removeEventListener(event, listener);
-    })
-  },
-  methods: {
-    emitEvent(keyCodes, modifiers, preventDefaults) {
-      return (e) => {
-        let index = keyCodes.indexOf(event.keyCode)
-        while (index != -1 || !keyCodes) {
-          let preventDefault = preventDefaults
-          if (Array.isArray(preventDefaults)) {
-            preventDefault = preventDefaults[index]
-          }
-          if (preventDefault){
-              e.preventDefault();
-          }          
-          let mods = modifiers
-          if (modifiers && modifiers.length && Array.isArray(modifiers[0])) {
-              mods = modifiers[index]
-          }          
-          // Check if only the specified modifiers were pressed
-          if (mods.length) {          
-            if (!supportedModifiers.every(modifier => event[modifier] == (mods.indexOf(modifier) != -1))) {
-              // try another code configuration
-              index = keyCodes.indexOf(event.keyCode, index + 1)
-              continue
-            }            
-          }
-          // Success:
-          this.$emit("pressed", event.keyCode, event.type, mods);        
-          break
-        }
-      }
+    for (const { keyEvent, listener } of this.keyListeners) {
+      window.removeEventListener(keyEvent, listener)
     }
   },
-  render: () => null
-};
+  methods: {
+    /** Initial Setup of the listeners */
+    /** ****************************** */
+    setupListeners() {
+      const expectedEvent = {
+        keyEvent: this.keyEvent,
+
+        // If single:
+        keyCode: this.keyCode,
+        preventDefault: this.preventDefault,
+        modifiers: this.modifiers,
+        // If multiple:
+        multipleKeys: this.multipleKeys,
+      }
+      this.addEventListener(expectedEvent)
+    },
+    addEventListener(expectedEvent) {
+      let listener = this.eventHandler(expectedEvent)
+      window.addEventListener(expectedEvent.keyEvent, listener)
+      this.keyListeners.push({ expectedEvent, listener })
+    },
+
+    /** Handling per keypress event */
+    /** *************************** */
+    eventHandler(expectedEvent) {
+      return (event) => {
+        const emitResponse = (emitEvent, message) => {
+          this.$emit(emitEvent, {
+            event,
+            expectedEvent,
+            message,
+          })
+        }
+        // Emit the emitEvent '@any' in any case:
+        emitResponse('any', 'Any key was pressed.')
+
+        const inMultipleKeysMode = expectedEvent.multipleKeys.length > 0
+
+        // In "any key" mode, emit '@success' and return
+        const inAnyKeyMode = !expectedEvent.keyCode && !inMultipleKeysMode
+        if (inAnyKeyMode) {
+          emitResponse('success', 'Any key was pressed.')
+          return
+        }
+
+        // Set expected inputs array respective to props bein "single" or "multiple"
+        let expectedInputs = [expectedEvent]
+        if (inMultipleKeysMode) {
+          expectedInputs = expectedEvent.multipleKeys
+        }
+
+        for (const expectedInput of expectedInputs) {
+          // Check if the correct keys have been clicked:
+          const correctKeyPressed = expectedInput.keyCode === event.keyCode
+          if (!correctKeyPressed) continue
+
+          // Get modifiers:
+          let hasModifiers = expectedInput.modifiers.length > 0
+
+          // Check if only the specified modifiers were pressed
+          if (hasModifiers) {
+            const modifiersPressed = supportedModifiers.every(
+              (x) => event[x] == (expectedInput.modifiers.indexOf(x) !== -1)
+            )
+            if (!modifiersPressed) continue
+          }
+
+          // SUCCESS -> if it got to here, this was the correct key.
+
+          // Set Prevent-Default
+          if (expectedEvent.preventDefault) {
+            event.preventDefault()
+          }
+          emitResponse('success', 'Correct key(s) pressed.')
+          return
+        }
+
+        // FAILURE: If it got to here, the correct key wasn't pressed:
+        emitResponse('wrong', 'Wrong key(s) pressed.')
+      }
+    },
+  },
+  render: () => null,
+}
 </script>

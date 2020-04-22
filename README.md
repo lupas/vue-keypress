@@ -39,28 +39,38 @@ components: {
 
 | Prop    | Type   | Default | Possible Values                   | Description c                                                             |
 | ------- | ------ | ------- | --------------------------------- | ------------------------------------------------------------------------- |
+| keyEvent   | String | 'keyup' | _keydown_, _keypress_, _keyup_    | |
 | keyCode | Number | null    | [see here](https://keycode.info/) | Key that should trigger the event. If _null_, any key will trigger event. |
-| event   | String | 'keyup' | _keydown_, _keypress_, _keyup_    | |
 | modifiers   | Array | [] | ['_ctrlKey_', '_shiftKey_', '_altKey_', '_metaKey_']    | Keys that needs to be pressed down before the actual key (key Code), e.g. Ctrl+A.  |
 | preventDefault   | Boolean | false | _true_,_false_    | Prevent the default action of the event |
+| multiple   | Array | [] | See example in 'Multiple Keys'   | Allows you to define multiple keyCode/modifier combinations per keyEvent. |
 
 # Events
 
-| Event    | Attributes | Description                                          |
-| -------- | ---------- | ---------------------------------------------------- |
-| @pressed | (key-code) | Get's emitted when the defined key has been pressed. |
+| Event    | Description                                          |
+| -------- |  ---------------------------------------------------- |
+| @pressed | Get's emitted when the defined key/modifiers were pressed. |
+| @wrong | Get's emitted when the wrong key(s) or modifier(s) was/were pressed. |
+| @any | Get's emitted with any keypress in any case. |
 
-# Example Usage
-
-HTML:
-
-```html
-<Keypress :key-code="13" event="keyup" @pressed="someMethod" />
-```
-
-Script:
+All of them return a payload like so:
 
 ```js
+{
+  event: Object // the official event object
+  expected-event: Object // your defined props.
+  message: String // A declarative message on error/success.
+}
+```
+
+# Simple Usage
+
+```vue
+<template>
+  <Keypress key-event="keyup" :key-code="13" @success="someMethod" />
+</template>
+
+<script>
 export default {
   components: {
     Keypress: () => import('vue-keypress')
@@ -71,4 +81,110 @@ export default {
     }
   }
 }
+</script>
+```
+
+# Multiple Keys
+
+The `multiple-keys` prop allows for defining multiple keys (or key-modifier combinations) per key-event that can be pressed for success.
+
+All the other props except key-event become redundant.
+
+```vue
+<template>
+  <Keypress key-event="keyup" :multiple-keys="multiple" @success="someMethod" />
+</template>
+
+<script>
+export default {
+  components: {
+    Keypress: () => import('vue-keypress')
+  },
+  data: () => ({
+    multiple: [
+        {
+          keyCode: 65, // A
+          modifiers: ['shiftKey'],
+          preventDefault: true,
+        },
+        {
+          keyCode: 83, // S
+          modifiers: ['shiftKey'],
+          preventDefault: false,
+        },
+      ],
+  }),
+  methods: {
+    someMethod() {
+      // Do something
+    }
+  }
+}
+</script>
+```
+
+# Multiple Key Events
+
+Multiple key events means that multiple event handlers for each evennt need to be registered. To do this, simply put your props in an array and register the component multiple times, like so:
+
+```vue
+<template>
+    <Keypress
+      v-for="keypressEvent in keypressEvents"
+      :key="keypressEvent.id"
+      :key-event="keypressEvent.keyEvent"
+      :multiple-keys="keypressEvent.multipleKeys"
+      @success="someMethod"
+    />
+</template>
+
+<script>
+export default {
+  components: {
+    Keypress: () => import('vue-keypress'),
+  },
+  data() {
+    return {
+      keypressEvents: [
+        {
+          keyEvent: 'keydown',
+          multipleKeys: [
+            {
+              keyCode: 65, // A
+              modifiers: ['shiftKey'],
+              preventDefault: true,
+            },
+            {
+              keyCode: 83, // S
+              modifiers: ['shiftKey'],
+              preventDefault: false,
+            },
+          ],
+        },
+        {
+          keyEvent: 'keyup',
+          multipleKeys: [
+            {
+              keyCode: 65, // A
+              modifiers: ['shiftKey'],
+              preventDefault: true,
+            },
+            {
+              keyCode: 83, // S
+              modifiers: ['shiftKey'],
+              preventDefault: false,
+            },
+          ],
+        },
+      ],
+    }
+  },
+  methods: {
+    someMethod(response) {
+      // Do something
+    }
+  },
+}
+</script>
+
 ```
