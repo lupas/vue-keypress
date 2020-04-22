@@ -1,4 +1,7 @@
 <script>
+
+const supportedModifiers = ['altKey', 'metaKey', 'ctrlKey', 'shiftKey']
+
 export default {
   props: {
     keyCode: {
@@ -15,28 +18,62 @@ export default {
     },
     preventDefault: {
       type: Boolean
-    }
+    },
+    config: {
+      type: Array,
+      default: null
+    }    
   },
   mounted() {
-    window.addEventListener(this.event, this.emitEvent);
+    this.m_keyListeners = []    
+    if (this.config) {
+      // use multi-key config exclusively
+      this.config.forEach(config => {
+        config.events.forEach(event => {
+          let listener = this.emitEvent(config.keyCodes, config.modifiers, config.preventDefault)
+          this.m_keyListeners.push({event, listener})
+          window.addEventListener(event, listener);  
+        });    
+      })    
+    } else {
+      let listener = this.emitEvent([this.keyCode], this.modifiers, this.preventDefault)
+      this.m_keyListeners.push({event: this.event, listener})
+      window.addEventListener(this.event, listener);  
+    }
   },
   destroyed() {
-    window.removeEventListener(this.event, this.emitEvent);
+    this.m_keyListeners.forEach(({event, listener}) => {
+      window.removeEventListener(event, listener);
+    })
   },
   methods: {
-    emitEvent(e) {
-      if (event.keyCode === this.keyCode || !this.keyCode) {
-        if (this.preventDefault){
-            e.preventDefault();
-        }
-        // Check if all modifiers were clicked and return, if not
-        if (this.modifiers.length) {
-          for (const modifier of this.modifiers) {
-            if (!event[modifier]) return
+    emitEvent(keyCodes, modifiers, preventDefaults) {
+      return (e) => {
+        let index = keyCodes.indexOf(event.keyCode)
+        while (index != -1 || !keyCodes) {
+          let preventDefault = preventDefaults
+          if (Array.isArray(preventDefaults)) {
+            preventDefault = preventDefaults[index]
           }
+          if (preventDefault){
+              e.preventDefault();
+          }          
+          let mods = modifiers
+          if (modifiers && modifiers.length && Array.isArray(modifiers[0])) {
+              mods = modifiers[index]
+          }          
+          // Check if only the specified modifiers were pressed
+          if (mods.length) {          
+            if (!supportedModifiers.every(modifier => event[modifier] == (mods.indexOf(modifier) != -1))) {
+              // try another code configuration
+              index = keyCodes.indexOf(event.keyCode, index + 1)
+              continue
+            }            
+          }
+          // Success:
+          this.$emit("pressed", event.keyCode, event.type, mods);        
+          break
         }
-        // Success:
-        this.$emit("pressed", event.keyCode);
       }
     }
   },
