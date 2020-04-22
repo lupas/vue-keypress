@@ -40,6 +40,27 @@ components: {
 ...
 ```
 
+# Simple Usage
+
+```vue
+<template>
+  <Keypress key-event="keyup" :key-code="13" @success="someMethod" />
+</template>
+
+<script>
+export default {
+  components: {
+    Keypress: () => import('vue-keypress')
+  },
+  methods: {
+    someMethod() {
+      // Do something
+    }
+  }
+}
+</script>
+```
+
 # Props
 
 | Prop    | Type   | Default | Possible Values                   | Description |
@@ -68,27 +89,6 @@ All of them return a payload like so:
   expectedEvent: Object, // your defined props.
   message: String // A declarative message on error/success.
 }
-```
-
-# Simple Usage
-
-```vue
-<template>
-  <Keypress key-event="keyup" :key-code="13" @success="someMethod" />
-</template>
-
-<script>
-export default {
-  components: {
-    Keypress: () => import('vue-keypress')
-  },
-  methods: {
-    someMethod() {
-      // Do something
-    }
-  }
-}
-</script>
 ```
 
 # Multiple Keys
