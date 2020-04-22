@@ -43,7 +43,7 @@ components: {
 | keyCode | Number | null    | [see here](https://keycode.info/) | Key that should trigger the event. If _null_, any key will trigger event. |
 | modifiers   | Array | [] | ['_ctrlKey_', '_shiftKey_', '_altKey_', '_metaKey_']    | Keys that needs to be pressed down before the actual key (key Code), e.g. Ctrl+A.  |
 | preventDefault   | Boolean | false | _true_,_false_    | Prevent the default action of the event |
-| multiple   | Array | [] | See example in 'Multiple Keys'   | Allows you to define multiple keyCode/modifier combinations per keyEvent. |
+| multipleKeys   | Array | [] | See example in 'Multiple Keys'   | Allows you to define multiple keyCode/modifier combinations per keyEvent. |
 
 # Events
 
