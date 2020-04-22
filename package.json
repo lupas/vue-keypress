@@ -4,7 +4,7 @@
   "description": "Global keypress event handler component for Vue.js applications.",
   "author": "Pascal Luther",
   "license": "MIT",
-  "homepage": "https://github.com/lupas",
+  "homepage": "https://github.com/lupas/vue-keypress",
   "repository": "https://github.com/lupas/vue-keypress",
   "keywords": [
     "vue, keypres, keydown, keyup"
