@@ -7,7 +7,7 @@
  </p>
 </p>
 
-# ‼️ BREAKING CHANGES: V1 to V2 Migration
+# ‼️ BREAKING CHANGES: v1.x to v2 Migration
 
 * Event `@pressed` is now called `@success`
 * Prop `event` is now called `keyEvent`
@@ -64,8 +64,8 @@ All of them return a payload like so:
 
 ```js
 {
-  event: Object // the official event object
-  expected-event: Object // your defined props.
+  event: Object, // the official event object
+  expectedEvent: Object, // your defined props.
   message: String // A declarative message on error/success.
 }
 ```
