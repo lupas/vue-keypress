@@ -202,7 +202,7 @@ export default {
 Add the following to your `tsconfig.json`:
 
 ```json
-    "types": [
-      "vue-keypress"
-    ]
+"types": [
+  "vue-keypress"
+]
 ```
