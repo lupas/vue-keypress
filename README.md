@@ -196,3 +196,13 @@ export default {
 </script>
 
 ```
+
+# Typescript Support
+
+Add the following to your `tsconfig.json`:
+
+```json
+    "types": [
+      "vue-keypress"
+    ]
+```
