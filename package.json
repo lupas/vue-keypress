@@ -19,7 +19,8 @@
   },
   "files": [
     "dist",
-    "src"
+    "src",
+    "types"
   ],
   "types": "types/index.d.ts",
   "module": "src/index.vue",
