@@ -1,16 +1,13 @@
 <script>
 const supportedModifiers = ['altKey', 'metaKey', 'ctrlKey', 'shiftKey']
 
-import { onMounted, onUnmounted, h } from 'vue'
-
 export default {
-  name: 'Keypress',
-
   props: {
     keyEvent: {
       type: String,
       default: 'keyup',
     },
+
     // Only for single key code:
     keyCode: {
       type: Number,
@@ -23,51 +20,52 @@ export default {
     preventDefault: {
       type: Boolean,
     },
+
     // Only for multiple key codes:
     multipleKeys: {
       type: Array,
       default: () => [],
     },
   },
-
-  setup(props, { emit }) {
-    const keyListeners = []
-
+  data: () => ({
+    keyListeners: [],
+  }),
+  mounted() {
+    this.setupListeners()
+  },
+  destroyed() {
+    for (const { keyEvent, listener } of this.keyListeners) {
+      window.removeEventListener(keyEvent, listener)
+    }
+  },
+  methods: {
     /** Initial Setup of the listeners */
     /** ****************************** */
-    const setupListeners = () => {
+    setupListeners() {
       const expectedEvent = {
-        keyEvent: props.keyEvent,
+        keyEvent: this.keyEvent,
+
         // If single:
-        keyCode: props.keyCode,
-        preventDefault: props.preventDefault,
-        modifiers: props.modifiers,
+        keyCode: this.keyCode,
+        preventDefault: this.preventDefault,
+        modifiers: this.modifiers,
         // If multiple:
-        multipleKeys: props.multipleKeys,
+        multipleKeys: this.multipleKeys,
       }
-
-      addEventListener(expectedEvent)
-    }
-
-    const addEventListener = (expectedEvent) => {
-      let listener = eventHandler(expectedEvent)
+      this.addEventListener(expectedEvent)
+    },
+    addEventListener(expectedEvent) {
+      let listener = this.eventHandler(expectedEvent)
       window.addEventListener(expectedEvent.keyEvent, listener)
-      console.log(expectedEvent)
-      keyListeners.push({ expectedEvent, listener })
-    }
-
-    const removeListeners = () => {
-      for (const { expectedEvent, listener } of keyListeners) {
-        window.removeEventListener(expectedEvent.keyEvent, listener)
-      }
-    }
+      this.keyListeners.push({ expectedEvent, listener })
+    },
 
     /** Handling per keypress event */
     /** *************************** */
-    const eventHandler = (expectedEvent) => {
+    eventHandler(expectedEvent) {
       return (event) => {
         const emitResponse = (emitEvent, message) => {
-          emit(emitEvent, {
+          this.$emit(emitEvent, {
             event,
             expectedEvent,
             message,
@@ -87,7 +85,6 @@ export default {
 
         // Set expected inputs array respective to props bein "single" or "multiple"
         let expectedInputs = [expectedEvent]
-
         if (inMultipleKeysMode) {
           expectedInputs = expectedEvent.multipleKeys
         }
@@ -99,6 +96,7 @@ export default {
 
           // Get modifiers:
           let hasModifiers = expectedInput.modifiers.length > 0
+
           // Check if only the specified modifiers were pressed
           if (hasModifiers) {
             const modifiersPressed = supportedModifiers.every(
@@ -108,6 +106,7 @@ export default {
           }
 
           // SUCCESS -> if it got to here, this was the correct key.
+
           // Set Prevent-Default
           if (expectedEvent.preventDefault) {
             event.preventDefault()
@@ -119,15 +118,8 @@ export default {
         // FAILURE: If it got to here, the correct key wasn't pressed:
         emitResponse('wrong', 'Wrong key(s) pressed.')
       }
-    }
-
-    onMounted(() => setupListeners())
-    onUnmounted(() => removeListeners())
+    },
   },
-
-  render() {
-    // [Vue warn]: Invalid vnode type when creating vnode
-    return h('div')
-  },
+  render: () => null,
 }
 </script>
