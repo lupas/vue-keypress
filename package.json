@@ -1,6 +1,6 @@
 {
-  "name": "vue3-keypress",
-  "version": "0.9.0",
+  "name": "vue-keypress",
+  "version": "2.1.1",
   "description": "Global keypress event handler component for Vue.js 3 applications.",
   "author": "Pascal Luther",
   "license": "MIT",
