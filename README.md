@@ -15,11 +15,11 @@ The Vue Keypress Component let's you do just that.
 
 Just add the component to the view/component that should start a global keypress handler. When the component gets destroyed, the global event handler also gets removed.
 
-# ‼️ BREAKING CHANGES: v1.x to v2 Migration
+# ‼️ Vue 3 Support
 
-* Event `@pressed` is now called `@success`
-* Prop `event` is now called `keyEvent`
-* The `@pressed` event (or now `@success` event) returns now an object with all the info and more
+This repository is for `vue-keypress` and is not maintained any longer.
+
+If you are using Vue 3, visit the repository [lupas/vue3-keypress](https://github.com/lupas/vue3-keypress)
 
 # How to install?
 
