@@ -1,7 +1,6 @@
 {
-  "name": "vue-keypress",
-  "version": "2.1.1",
-  "description": "Global keypress event handler component for Vue.js 3 applications.",
+  "name": "vue-keypress-monorepo",
+  "description": "Global keypress event handler component for Vue.js 2 applications.",
   "author": "Pascal Luther",
   "license": "MIT",
   "homepage": "https://github.com/lupas/vue-keypress",
@@ -9,30 +8,7 @@
   "keywords": [
     "vue, keypress, keydown, keyup"
   ],
-  "publishConfig": {
-    "access": "public"
-  },
-  "scripts": {
-    "build": "cd build && npm run build:npm",
-    "publishToNpm": "npm run build && npm publish",
-    "demo": "cd demo && yarn dev"
-  },
-  "files": [
-    "dist",
-    "src",
-    "types"
-  ],
-  "types": "types/index.d.ts",
-  "module": "src/index.vue",
-  "main": "dist/Keypress.umd.js",
-  "unpkg": "dist/Keypress.umd.min.js",
-  "devDependencies": {
-    "babel-eslint": "^10.1.0",
-    "eslint": "^7.16.0",
-    "eslint-config-prettier": "^7.1.0",
-    "eslint-loader": "^4.0.2",
-    "eslint-plugin-prettier": "^3.3.0",
-    "eslint-plugin-vue": "^7.3.0",
-    "prettier": "^2.2.1"
-  }
+  "workspaces": [
+    "packages/*/**"
+  ]
 }
