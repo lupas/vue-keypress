@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "demo": "npx vue-cli-service serve"
+    "demo": "vue-cli-service serve"
   },
   "dependencies": {
     "core-js": "^3.7.0",
