@@ -34,8 +34,8 @@ export default {
     this.setupListeners()
   },
   destroyed() {
-    for (const { keyEvent, listener } of this.keyListeners) {
-      window.removeEventListener(keyEvent, listener)
+    for (const { expectedEvent, listener } of this.keyListeners) {
+      window.removeEventListener(expectedEvent, listener)
     }
   },
   methods: {
