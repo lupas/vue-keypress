@@ -27,11 +27,11 @@
   "unpkg": "dist/Keypress.umd.min.js",
   "devDependencies": {
     "babel-eslint": "^10.1.0",
-    "eslint": "^7.16.0",
-    "eslint-config-prettier": "^7.1.0",
+    "eslint": "^8.26.0",
+    "eslint-config-prettier": "^8.5.0",
     "eslint-loader": "^4.0.2",
-    "eslint-plugin-prettier": "^3.3.0",
-    "eslint-plugin-vue": "^7.3.0",
+    "eslint-plugin-prettier": "^4.2.1",
+    "eslint-plugin-vue": "^9.6.0",
     "prettier": "^2.2.1"
   },
   "dependencies": {
